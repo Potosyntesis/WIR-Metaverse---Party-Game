@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 575476181253057804}
-  - component: {fileID: 1229253342}
+  - component: {fileID: 7845419626935733593}
   m_Layer: 0
   m_Name: Active Ragdoll Animation
   m_TagString: Untagged
@@ -35,7 +35,7 @@ Transform:
   m_Father: {fileID: 7405279718383738112}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1229253342
+--- !u!114 &7845419626935733593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 575476181253057803}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca57638c98097da4485b54eeb856f475, type: 3}
+  m_Script: {fileID: 11500000, guid: ecb33c202a5d37b4daba4c199a81e4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rig: {fileID: 575476181801143568}
+  gameObjectToFollow: {fileID: 575476181801143568}
 --- !u!1 &4727336443535730952
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +252,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 50dfa497e74a86944b3cef263a225492, type: 2}
+    - target: {fileID: 13700000, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 09758ac10a313fc4ead2293c4aaf396e, type: 2}
+    - target: {fileID: 13700000, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2a4d2a26c50436b409531b3d11b5dc72, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
 --- !u!4 &575476181801046346 stripped
@@ -544,18 +556,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f3b23ac38a2ac41896e23159e58077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  aniLeft: {fileID: 0}
+  aniRight: {fileID: 0}
   mainObject: {fileID: 575476182402288429}
   leftObject: {fileID: 575476181894265246}
   rightObject: {fileID: 575476181910154274}
+  root: {fileID: 575476182057713952}
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  root: {fileID: 575476182057713952}
   jumpHeight: 750
   jumpSpeed: 20
-  speedMultiplier: 75
+  speedMultiplier: 150
   distToGround: 0.45
-  isOwner: 1
+  isOwner: 0
 --- !u!1 &575476181801143648 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: 02dd6406ed1ebc248b2fafd0485e0de9, type: 3}
@@ -730,10 +745,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9b9923c5542c849aec5c02039f7d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainRoot: {fileID: 575476181801143568}
   attachedArm: {fileID: 575476181801143648}
   leftObject: {fileID: 575476181894265246}
   rightObject: {fileID: 575476181910154274}
-  alreadyGrabbing: 0
+  isGrabbing: 0
   pushStrength: 20
 --- !u!1 &575476181801143652 stripped
 GameObject:
@@ -1197,10 +1213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e9b9923c5542c849aec5c02039f7d0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainRoot: {fileID: 575476181801143568}
   attachedArm: {fileID: 575476181801143660}
   leftObject: {fileID: 575476181894265246}
   rightObject: {fileID: 575476181910154274}
-  alreadyGrabbing: 0
+  isGrabbing: 0
   pushStrength: 20
 --- !u!1 &575476181801143664 stripped
 GameObject:

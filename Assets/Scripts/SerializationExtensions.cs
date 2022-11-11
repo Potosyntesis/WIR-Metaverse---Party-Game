@@ -16,6 +16,17 @@ namespace DarkriftSerializationExtensions
             writer.Write(v.y);
             writer.Write(v.z);
         }
+        public static void WriteVector3s(this DarkRiftWriter writer, Vector3[] v)
+        {
+            int i = 0;
+            int size = v.Length;
+            for (i = 0; i < size; i++)
+            {
+                writer.Write(v[i].x);
+                writer.Write(v[i].y);
+                writer.Write(v[i].z);
+            }
+        }
 
         /// <summary>
         /// Reads a Vector3 (12 bytes)
@@ -23,6 +34,16 @@ namespace DarkriftSerializationExtensions
         public static Vector3 ReadVector3(this DarkRiftReader reader)
         {
             return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+        }
+        public static Vector3[] ReadVector3s(this DarkRiftReader reader, int amount)
+        {
+            Vector3[] arr = new Vector3[amount];
+            int i = 0;
+            for(i=0;i<amount;i++)
+            {
+                arr[i] = new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            }
+            return arr;
         }
 
         /// <summary>
@@ -33,6 +54,16 @@ namespace DarkriftSerializationExtensions
             writer.Write(v.x);
             writer.Write(v.y);
         }
+        public static void WriteVector2s(this DarkRiftWriter writer, Vector2[] v)
+        {
+            int i = 0;
+            int size = v.Length;
+            for (i = 0; i < size; i++)
+            {
+                writer.Write(v[i].x);
+                writer.Write(v[i].y);
+            }
+        }
 
         /// <summary>
         /// Reads a Vector2 (8 bytes)
@@ -40,6 +71,16 @@ namespace DarkriftSerializationExtensions
         public static Vector2 ReadVector2(this DarkRiftReader reader)
         {
             return new Vector2(reader.ReadSingle(), reader.ReadSingle());
+        }
+        public static Vector2[] ReadVector2s(this DarkRiftReader reader, int amount)
+        {
+            Vector2[] arr = new Vector2[amount];
+            int i = 0;
+            for (i = 0; i < amount; i++)
+            {
+                arr[i] = new Vector2(reader.ReadSingle(), reader.ReadSingle());
+            }
+            return arr;
         }
 
         /// <summary>
@@ -74,7 +115,6 @@ namespace DarkriftSerializationExtensions
             byte maxIndex = 0;
             float maxValue = float.MinValue;
             float sign = 1f;
-
             for (int i = 0; i < 4; i++)
             {
                 float f = q[i];
@@ -120,6 +160,16 @@ namespace DarkriftSerializationExtensions
             writer.Write(c);
         }
 
+        public static void WriteQuaternionCompresseds(this DarkRiftWriter writer, Quaternion[] q)
+        {
+            int i = 0;
+            int size = q.Length;
+            for(i = 0;i<size;i++)
+            {
+                WriteQuaternionCompressed(writer, q[i]);
+            }
+        }
+
         /// <summary>
         /// Reads a quaternion that was written by WriteQuaternionCompressed
         /// </summary>
@@ -143,6 +193,17 @@ namespace DarkriftSerializationExtensions
                 default:
                     return new Quaternion(a, b, c, d);
             }
+        }
+
+        public static Quaternion[] ReadQuaternionCompresseds(this DarkRiftReader reader, int amount)
+        {
+            Quaternion[] arr = new Quaternion[amount];
+            int i = 0;
+            for (i = 0; i < amount; i++)
+            {
+                arr[i] = ReadQuaternionCompressed(reader);
+            }
+            return arr;
         }
 
         private static bool GetBit(this byte b, int bitIndex)

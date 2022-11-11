@@ -18,7 +18,7 @@ public class CollisionDectection : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        transform.parent.GetComponent<PlayerRagdollInputManager>().CollisionDetected(this);
+        //transform.parent.GetComponent<PlayerRagdollInputManager>().CollisionDetected(this);
     }
 
     private void OnCollisionExit(Collision collision)

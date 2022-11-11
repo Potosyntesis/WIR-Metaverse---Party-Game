@@ -15,7 +15,7 @@ public class AnimationHandler : MonoBehaviour
         startingRotation = transform.rotation;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         joint.SetTargetRotationLocal(target.rotation, startingRotation);
     }

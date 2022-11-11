@@ -52,7 +52,7 @@ public class PlayerInputManager : MonoBehaviour
         cameraTransform = Camera.main.transform;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isOwner) return;
 
@@ -88,8 +88,8 @@ public class PlayerInputManager : MonoBehaviour
         //Debug.Log(Quaternion.Euler(0, angle, 0));
         //Debug.Log(transform.rotation);
 
-        PositionRotationPayload positionPayload = new PositionRotationPayload(transform.position, transform.rotation);
-        ClientManager.Instance.SendMessage<PositionRotationPayload>(Tags.Position, positionPayload, DarkRift.SendMode.Reliable);
+        //PositionRotationPayload positionPayload = new PositionRotationPayload(transform.position, transform.rotation);
+        //ClientManager.Instance.SendMessage<PositionRotationPayload>(Tags.Position, positionPayload, DarkRift.SendMode.Reliable);
 
     }
 

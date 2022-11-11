@@ -1,69 +1,72 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ObjectGrabbing : MonoBehaviour
 {
-    [SerializeField] GameObject attachedArm, leftObject, rightObject;
-    [SerializeField] bool alreadyGrabbing = false;
+    public static ObjectGrabbing Instance;
+    [SerializeField] GameObject mainRoot, attachedArm, leftObject, rightObject;
+    [SerializeField] bool isGrabbing = false;
     [SerializeField] float pushStrength = 5f;
 
     private GameObject grabbedObj;
     private PlayerControlBindings controlBindings;
     private Animator aniLeft, aniRight;
     private Rigidbody rb;
-    private bool isPush = false;
+    private bool isPush = false, isAttached = false;
 
     void Start()
     {
+        //will return if the client is not owner of game object
+        if (!mainRoot.GetComponent<PlayerRagdollInputManager>().isOwner) return;
+
+        //set the rigid body for the object to get attached to
         rb = attachedArm.GetComponent<Rigidbody>();
         aniLeft = leftObject.GetComponent<Animator>();
         aniRight = rightObject.GetComponent<Animator>();
 
+        //creating object of unity input system
         controlBindings = new PlayerControlBindings();
         controlBindings.PlayerInput.Enable();
-
         controlBindings.PlayerInput.Grab.performed += Grab_Performed;
         controlBindings.PlayerInput.Grab.canceled += Grab_Canceled;
         controlBindings.PlayerInput.Push.performed += Push_Performed;
         controlBindings.PlayerInput.Push.canceled += Push_Canceled;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        //Debug.Log(isPush);
+        //will return if the client is not owner of game object
+        if (!mainRoot.GetComponent<PlayerRagdollInputManager>().isOwner) return;
 
-        if (!alreadyGrabbing && grabbedObj != null)
-        {
-            FixedJoint fj = grabbedObj.GetComponent<FixedJoint>();
-            fj.connectedBody = null;
-            fj.breakForce = 0;
-            Destroy(fj);
-        }
+        GrabAnimation grabAnimation = new GrabAnimation(isGrabbing, isPush, 0);
+        ClientManager.Instance.SendMessage<GrabAnimation>(Tags.GrabAnimation, grabAnimation, DarkRift.SendMode.Unreliable);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Item"))
+        if (ServerManager.Instance != null && other.gameObject.CompareTag("Item"))
         {
+            Debug.Log("Collision");
             grabbedObj = other.gameObject;
         }
 
+        //set the game object with item tag to attach
 
 
-        if (other.gameObject.CompareTag("Item") && isPush)
-        {
-            Rigidbody otherRB = grabbedObj.GetComponent<Rigidbody>();
+        ////set the game object with item tag to push
+        //if (other.gameObject.CompareTag("Item") && isPush)
+        //{
+        //    Rigidbody otherRB = grabbedObj.GetComponent<Rigidbody>();
 
-            Vector3 forceDir = other.gameObject.transform.position - transform.position;
-            forceDir.y = 0;
-            forceDir.Normalize();
+        //    //add force to rigid body if pressed
+        //    Vector3 forceDir = other.gameObject.transform.position - transform.position;
+        //    forceDir.y = 0;
+        //    forceDir.Normalize();
 
-            otherRB.AddForceAtPosition(forceDir * pushStrength, transform.position, ForceMode.Impulse);
+        //    otherRB.AddForceAtPosition(forceDir * pushStrength, transform.position, ForceMode.Impulse);
 
-            isPush = false;
-        }
+        //    isPush = false;
+        //}
     }
 
     private void OnTriggerExit(Collider other)
@@ -73,28 +76,18 @@ public class ObjectGrabbing : MonoBehaviour
 
     public void Grab_Performed(InputAction.CallbackContext context)
     {
-        alreadyGrabbing = true;
+        isGrabbing = true;
 
         aniLeft.SetBool("IsLeftUp", true);
         aniRight.SetBool("IsRightUp", true);
-
-        FixedJoint fj = grabbedObj.AddComponent<FixedJoint>();
-        fj.connectedBody = rb;
-        fj.breakForce = 10000;
     }
 
     public void Grab_Canceled(InputAction.CallbackContext context)
     {
-        alreadyGrabbing = false;
+        isGrabbing = false;
 
         aniLeft.SetBool("IsLeftUp", false);
         aniRight.SetBool("IsRightUp", false);
-
-        FixedJoint fj = grabbedObj.GetComponent<FixedJoint>();
-        fj.connectedBody = null;
-        fj.breakForce = 0;
-        Destroy(fj);
-        grabbedObj = null;
     }
 
     public void Push_Performed(InputAction.CallbackContext context)
@@ -105,5 +98,17 @@ public class ObjectGrabbing : MonoBehaviour
     public void Push_Canceled(InputAction.CallbackContext context)
     {
         isPush = false;
+    }
+
+    public GameObject GetObject()
+    {
+        if(grabbedObj != null)
+        {
+            return grabbedObj;
+        }
+        else
+        {
+            return null;
+        }
     }
 }
