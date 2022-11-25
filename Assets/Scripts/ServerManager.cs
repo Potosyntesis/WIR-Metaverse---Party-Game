@@ -178,10 +178,6 @@ public class ServerManager : MonoBehaviour
                                 fj.breakForce = 0;
                                 Destroy(fj);
                             }
-
-
-
-
                             SendMessageToAllClients<GrabAnimation>(Tags.GrabAnimation, data, SendMode.Reliable, client.ID);
                         }
                     }

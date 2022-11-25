@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ipAddress: 127.0.0.1
-  port: 4296
+  port: 25565
   client: {fileID: 9212408326634332477}
-  characterPrefab: {fileID: 2908429041185879748, guid: e47f57606a4433c46ad13f607563dfff, type: 3}
+  characterPrefab: {fileID: 4727336443535730952, guid: bcd76e47beeedf647af149aa4ac3a63a, type: 3}
   spawnPosition: {fileID: 0}

@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8041595828163842158}
   - component: {fileID: 7289261739715313278}
   - component: {fileID: 2386177765828031763}
+  - component: {fileID: 1920868339}
   m_Layer: 0
   m_Name: GroundRotatingPlatform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,9 +97,22 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1920868339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7956863817919386514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02d4ec560bf62f4c90b2536991516a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationVelocity: {x: 0, y: 90, z: 0}
 --- !u!1 &8507422594267565876
 GameObject:
   m_ObjectHideFlags: 0

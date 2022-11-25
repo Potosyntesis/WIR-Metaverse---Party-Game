@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PendulumScriptcc : MonoBehaviour
+public class Pendulum : MonoBehaviour
 {
     float timer = 0f;
     float speed = 1f;

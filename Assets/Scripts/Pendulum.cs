@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pendulum : MonoBehaviour
+public class PendulumScript : MonoBehaviour
 {
     float timer = 0f;
     float speed = 1f;
     int phase = 0;
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         timer += Time.fixedDeltaTime;
         if(timer > 1f)
